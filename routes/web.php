@@ -5,9 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('home.index');
-});
+Route::get('/', [HomeController::class,'home']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
