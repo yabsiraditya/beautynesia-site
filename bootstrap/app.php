@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\PreventBackButtonMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
         ]);
+
+        $middleware->append([
+            'prevent-back-history'=> \App\Http\Middleware\PreventBackButtonMiddleware::class]);
 
     })
     ->withExceptions(function (Exceptions $exceptions) {

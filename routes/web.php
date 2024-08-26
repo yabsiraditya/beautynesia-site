@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\PreventBackButtonMiddleware;
 
 Route::get('/', [HomeController::class,'home']);
 
@@ -19,5 +20,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('admin/dashboard', [HomeController::class, 'index'])->
+Route::get('/dashboard', [HomeController::class, 'index'])->
     middleware(['auth', 'admin']);
+
+Route::group(['middleware' => ['auth', 'prevent-back-history']], function() {
+	Route::get('/home', [HomeController::class,'index']);
+});
